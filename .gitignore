@@ -14,3 +14,6 @@ backend/app/uploaded_files/
 env/
 .git
 *.db
+.pytest_cache
+backend/tests/__pycache__/
+backend/tests/.pytest_cache
