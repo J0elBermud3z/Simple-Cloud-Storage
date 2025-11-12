@@ -3,3 +3,4 @@ werkzeug
 flask-socketio
 eventlet
 gunicorn
+pytest

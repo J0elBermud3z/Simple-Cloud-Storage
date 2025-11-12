@@ -117,7 +117,6 @@ def all_files(url='/') -> dict: # Json dict
     all_files_and_directories = {}
     base_path = current_app.config['UPLOADED_FILES'] 
     debug_message(f" /api/ : Arg path value '{url}'",current_app.config['DEBUG_MODE'])
-    print('ruta',base_path,' ',url)
 
     url = format_directory(url)
     if secure_path(base_path,url):
@@ -129,7 +128,7 @@ def all_files(url='/') -> dict: # Json dict
             all_files_and_directories['actions']     = [{'label':'Create Directory', 'method':'POST', 'url':'/api/'+url+'/new_directory/' if url != '/' else '/api/new_directory/'},
                                                        {'label':'Upload File', 'method':'POST', 'url':'/api/file/'+url if url != '/' else '/api/file/'}]
             
-            if url != '/': # Operations are not allowed in the root path '/'.
+            if url != '/':
                 all_files_and_directories['actions'].append({'label':'Delete', 'method':'DELETE', 'url':'/api/'+url})
                 all_files_and_directories['actions'].append({'label':'Rename', 'method':'PATCH', 'url':'/api/'+url+'/old_name/new_name'})
                 all_files_and_directories['actions'].append({'label':'Get path size', 'method':'GET','url':'/api/size?path='+url}) 
