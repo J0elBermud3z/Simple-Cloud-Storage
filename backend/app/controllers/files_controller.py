@@ -49,7 +49,7 @@ def upload_file(folder_path='') -> dict: # Json dict, redirect
 @file_bp.route('/folder/<path:folder_path>', methods=['POST'])
 def create_directory(folder_path=''):
     
-    base_path = current_app.config['UPLOADED_FILES']
+    base_path = current_app.config['UPLOADED_FILES']    
     final_path = os.path.join(base_path,folder_path)
     
     if not os.path.exists(final_path):
