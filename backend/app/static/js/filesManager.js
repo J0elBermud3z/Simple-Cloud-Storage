@@ -17,7 +17,7 @@ function removeSpaces(path) {
 function generateDirectoriesHTML(response,pathDirectory) {
 
     let htmlDirectories = '';
-    let directories = response['directories'];
+    let directories = response['data']['directories'];
     for (let indexDirectory = 0; indexDirectory < directories.length; indexDirectory++) {
 
         const folder = directories[indexDirectory];
@@ -40,7 +40,7 @@ function generateDirectoriesHTML(response,pathDirectory) {
 function generateFilesHTML(response) {
     
     let htmlDirectories = '';
-    let files       = response['files'];
+    let files       = response['data']['files'];
     for (let indexDirectory = 0; indexDirectory < files.length; indexDirectory++) {
         htmlDirectories +=             `<div class="col text-center">
         <div class="hover-group">
