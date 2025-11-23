@@ -2,12 +2,22 @@ import os
 import shutil
 import threading
 import time
+
 from flask import Blueprint, request, redirect, jsonify
 from flask import current_app
-from app.extensions.ext import socketio,emit
 from werkzeug.utils import secure_filename
+
+from app.extensions.ext import socketio
 from app.utils.functions import debug_message
-from app.utils.filesystem import format_directory,secure_path,have_files,get_path_size,get_total_files_and_directories, get_filetype,delete_first_bar, format_root
+from app.utils.filesystem import (format_directory,
+                                  secure_path,
+                                  have_files,
+                                  get_path_size,
+                                  get_total_files_and_directories
+                                  ,get_filetype,
+                                  delete_first_bar,
+                                  format_root)
+
 
 file_bp = Blueprint('api', __name__, url_prefix='/api/') 
 
@@ -117,7 +127,6 @@ def all_files(url='/') -> dict: # Json dict
     all_files_and_directories = {}
     base_path = current_app.config['UPLOADED_FILES'] 
     debug_message(f" /api/ : Arg path value '{url}'",current_app.config['DEBUG_MODE'])
-    print('ruta',base_path,' ',url)
 
     url = format_directory(url)
     if secure_path(base_path,url):
@@ -129,7 +138,7 @@ def all_files(url='/') -> dict: # Json dict
             all_files_and_directories['actions']     = [{'label':'Create Directory', 'method':'POST', 'url':'/api/'+url+'/new_directory/' if url != '/' else '/api/new_directory/'},
                                                        {'label':'Upload File', 'method':'POST', 'url':'/api/file/'+url if url != '/' else '/api/file/'}]
             
-            if url != '/': # Operations are not allowed in the root path '/'.
+            if url != '/':
                 all_files_and_directories['actions'].append({'label':'Delete', 'method':'DELETE', 'url':'/api/'+url})
                 all_files_and_directories['actions'].append({'label':'Rename', 'method':'PATCH', 'url':'/api/'+url+'/old_name/new_name'})
                 all_files_and_directories['actions'].append({'label':'Get path size', 'method':'GET','url':'/api/size?path='+url}) 
