@@ -7,7 +7,6 @@ BASE_URL = "http://localhost:80/api"
 TEST_DIRECTORY_NAME = f"test_directory_{uuid.uuid4().hex[:6]}"
 TEST_DIRECTORY_PATH = os.path.join(os.path.dirname(__file__), TEST_DIRECTORY_NAME)
 
-
 def test_01_create_directory():
 
     if not os.path.exists(TEST_DIRECTORY_PATH):

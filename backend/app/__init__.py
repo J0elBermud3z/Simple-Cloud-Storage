@@ -10,7 +10,6 @@ from .controllers.error_handlers import register_error_handlers
 
 
 
-    
 def create_app():
     
     app = Flask(__name__, template_folder='views')
