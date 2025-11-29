@@ -22,7 +22,14 @@ from functools import wraps
 from flask import request, jsonify
 from app.utils.filesystem import secure_path, get_filetype, have_files
 
-def filesystem_validation(func):
+def files_validations(func):
+    @wraps(func)
+    def wrapper(*args, **kwards):
+        pass
+    
+    return wrapper
+
+def folders_validations(func):
     @wraps(func)
     def wrapper(*args, **kwards):
         pass
