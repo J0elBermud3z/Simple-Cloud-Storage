@@ -21,105 +21,6 @@ from app.utils.filesystem import (format_directory,
 
 file_bp = Blueprint('api', __name__, url_prefix='/api/') 
 
-@file_bp.route('/file/', methods=['POST'])
-@file_bp.route('/file/<path:folder_path>', methods=['POST'])
-def upload_file(folder_path='') -> dict: # Json dict, redirect
-    base_path = current_app.config['UPLOADED_FILES']
-    final_path = os.path.join(base_path,folder_path)
-
-    if 'file' in request.files:
-        file = request.files['file']
-        if file.filename != '':
-            filename = secure_filename(file.filename)
-            save_path = (os.path.join(final_path, filename) if folder_path != '/' else base_path)
-            file.save(save_path)
-            return jsonify({
-            'status': 'success',
-            'data': {
-                'name': filename,
-                'type': 'file',
-                'size': get_path_size(final_path),
-                'path': format_root(folder_path)
-            }
-        }), 200
-
-    else:
-        return jsonify({'status':'error','message': 'No file selected'}), 400
-
-@file_bp.route('/folder/<path:folder_path>', methods=['POST'])
-def create_directory(folder_path=''):
-    
-    base_path = current_app.config['UPLOADED_FILES']    
-    final_path = os.path.join(base_path,folder_path)
-    
-    if not os.path.exists(final_path):
-        folder_name = folder_path.split('/')[-1]
-        os.makedirs(final_path)
-        return jsonify({
-        'status': 'success',
-        'data': {
-            'name': folder_name,
-            'type': 'directory',
-            'size': get_path_size(final_path),
-            'path': format_root(folder_path)
-        }
-    }), 200
-
-    else:
-        return jsonify({'status':'error',
-                        'message': 'Directory already exists'
-                        }), 409
-
-
-@file_bp.route('/<old_name>/<new_name>', methods=['PATCH'])
-@file_bp.route('/<path:folder_path>/<old_name>/<new_name>', methods=['PATCH'])
-def rename_file(old_name, new_name, folder_path=''):
-
-    base_path = current_app.config['UPLOADED_FILES']
-
-    old_path = os.path.join(base_path, folder_path, old_name)
-    new_path = os.path.join(base_path, folder_path, new_name)
-
-    if os.path.exists(old_path):
-        try:
-            os.rename(old_path, new_path)
-            return jsonify({'status':'success',
-                            'message': f'¡{"Directory" if os.path.isdir(new_path) else "File"} renamed successfully!'
-                            }), 200
-        
-        except Exception as e:
-            return jsonify({'status':'error',
-                            'message': f'Error renaming file or directory: {str(e)}'
-                            }), 500
-    
-    return jsonify({'status':'error',
-                    'message': '¡File or directory not found!'
-                    }), 404
-
-
-@file_bp.route('/<path:file_name>', methods=['DELETE'])
-def delete_file(file_name) -> dict: # Json dict, redirect
-
-    file_path = os.path.join(current_app.config['UPLOADED_FILES'],file_name) 
-
-    if os.path.exists(file_path):
-        file_name = secure_filename(file_name)
-        if os.path.isfile(file_path):
-            os.remove(os.path.join(current_app.config['UPLOADED_FILES'],file_name))
-            return jsonify({'status':'success',
-                            'message':'¡File deleted successfully!'
-                            }),200
-
-        else:
-            shutil.rmtree(file_path, ignore_errors=True)
-            return jsonify({'status':'success',
-                            'message':'¡Directory deleted successfully!'
-                            }),200           
-    
-    return jsonify({'status':'error',
-                    'message':f'¡File or directory not found!'
-                    }),404
- 
 @file_bp.route('/', methods=['GET'])
 @file_bp.route('/<path:url>', methods=['GET'])
 def all_files(url='/') -> dict: # Json dict  
@@ -180,25 +81,104 @@ def get_file_size():
                     'name': os.path.basename(file_path),
                     'size':get_path_size(file_path)}
                     }),200
+ 
 
+@file_bp.route('/file/', methods=['POST'])
+@file_bp.route('/file/<path:folder_path>', methods=['POST'])
+def upload_file(folder_path='') -> dict: # Json dict, redirect
+    base_path = current_app.config['UPLOADED_FILES']
+    final_path = os.path.join(base_path,folder_path)
+
+    if 'file' in request.files:
+        file = request.files['file']
+        if file.filename != '':
+            filename = secure_filename(file.filename)
+            save_path = (os.path.join(final_path, filename) if folder_path != '/' else base_path)
+            file.save(save_path)
+            return jsonify({
+            'status': 'success',
+            'data': {
+                'name': filename,
+                'type': 'file',
+                'size': get_path_size(final_path),
+                'path': format_root(folder_path)
+            }
+        }), 200
+
+    else:
+        return jsonify({'status':'error','message': 'No file selected'}), 400
+
+
+@file_bp.route('/<old_name>/<new_name>', methods=['PATCH'])
+@file_bp.route('/<path:folder_path>/<old_name>/<new_name>', methods=['PATCH'])
+def rename_file(old_name, new_name, folder_path=''):
+
+    base_path = current_app.config['UPLOADED_FILES']
+
+    old_path = os.path.join(base_path, folder_path, old_name)
+    new_path = os.path.join(base_path, folder_path, new_name)
+
+    if os.path.exists(old_path):
+        try:
+            os.rename(old_path, new_path)
+            return jsonify({'status':'success',
+                            'message': f'¡{"Directory" if os.path.isdir(new_path) else "File"} renamed successfully!'
+                            }), 200
+        
+        except Exception as e:
+            return jsonify({'status':'error',
+                            'message': f'Error renaming file or directory: {str(e)}'
+                            }), 500
     
-def check_files_thread(app,sid):
+    return jsonify({'status':'error',
+                    'message': '¡File or directory not found!'
+                    }), 404
 
-    with app.app_context():
-        base_path = current_app.config['UPLOADED_FILES']         
-        aux_new_files = get_total_files_and_directories(base_path)
-        while True:
-            time.sleep(1)
-            new_files = get_total_files_and_directories(base_path)
-            if new_files != aux_new_files:
-                aux_new_files = new_files
-                socketio.emit('new_files', {'message': 'Nuevo archivo'}, to=sid)
 
-@socketio.on('connect')
-def on_connect():
+@file_bp.route('/<path:file_name>', methods=['DELETE'])
+def delete_file(file_name) -> dict: # Json dict, redirect
 
-    sid = request.sid
-    app = current_app._get_current_object()
-    thread = threading.Thread(target=check_files_thread, args=(app, sid))
-    thread.daemon = True
-    thread.start()
+    file_path = os.path.join(current_app.config['UPLOADED_FILES'],file_name) 
+
+    if os.path.exists(file_path):
+        file_name = secure_filename(file_name)
+        if os.path.isfile(file_path):
+            os.remove(os.path.join(current_app.config['UPLOADED_FILES'],file_name))
+            return jsonify({'status':'success',
+                            'message':'¡File deleted successfully!'
+                            }),200
+
+        else:
+            shutil.rmtree(file_path, ignore_errors=True)
+            return jsonify({'status':'success',
+                            'message':'¡Directory deleted successfully!'
+                            }),200           
+    
+    return jsonify({'status':'error',
+                    'message':f'¡File or directory not found!'
+                    }),404
+ 
+
+@file_bp.route('/folder/<path:folder_path>', methods=['POST'])
+def create_directory(folder_path=''):
+    
+    base_path = current_app.config['UPLOADED_FILES']    
+    final_path = os.path.join(base_path,folder_path)
+    
+    if not os.path.exists(final_path):
+        folder_name = folder_path.split('/')[-1]
+        os.makedirs(final_path)
+        return jsonify({
+        'status': 'success',
+        'data': {
+            'name': folder_name,
+            'type': 'directory',
+            'size': get_path_size(final_path),
+            'path': format_root(folder_path)
+        }
+    }), 200
+
+    else:
+        return jsonify({'status':'error',
+                        'message': 'Directory already exists'
+                        }), 409

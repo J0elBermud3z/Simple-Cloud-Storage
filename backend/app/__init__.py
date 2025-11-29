@@ -22,5 +22,8 @@ def create_app():
     
     socketio.init_app(app)
 
+    # events
+    from .events.check_new_files_event import event_new_files
+
     #register_error_handlers(app)
     return app

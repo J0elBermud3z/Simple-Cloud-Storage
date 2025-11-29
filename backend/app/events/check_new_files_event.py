@@ -21,11 +21,10 @@ def check_files_thread(app, sid):
             if new_files != aux_new_files:
                 aux_new_files = new_files
                 socketio.emit('new_files', {'message': 'new change detected'}, to=sid)
-
-            debug_message('[*] [EVENT] [check_new_files_event] running...',DEBUG_MODE=current_app.config['DEBUG_MODE'])
+                debug_message('[*] [EVENT] [check_new_files_event] running...',DEBUG_MODE=current_app.config['DEBUG_MODE'])
 
 @socketio.on('connect')
-def on_connect():
+def event_new_files():
     sid = request.sid
     app = current_app._get_current_object()
 
