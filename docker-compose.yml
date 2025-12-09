@@ -14,9 +14,3 @@ services:
       - "80:80"
     depends_on:
       - backend
-  
-  tests:
-    build: ./backend
-    depends_on:
-      - apache
-    command: bash -c "sleep 5 && pytest -v"
