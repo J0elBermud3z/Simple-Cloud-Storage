@@ -5,7 +5,7 @@ from flask import current_app
 from flask import request
 
 from app.extensions.ext import socketio
-from app.utils.functions import debug_message
+from app.utils.generic_functions import debug_message
 from app.utils.filesystem import get_total_files_and_directories
 
 

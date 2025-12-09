@@ -4,7 +4,8 @@ from .extensions.ext import socketio
 from .config import Paths
 from .config import Config
 
-from .controllers.files_controller import file_bp
+from .controllers.file_controller import file_bp
+from .controllers.folder_controller import folder_bp
 from .controllers.home_controller import home_bp
 from .controllers.error_handlers import register_error_handlers
 
@@ -18,6 +19,7 @@ def create_app():
     app.config.from_object(Config)
 
     app.register_blueprint(file_bp)
+    app.register_blueprint(folder_bp)
     app.register_blueprint(home_bp)
     
     socketio.init_app(app)

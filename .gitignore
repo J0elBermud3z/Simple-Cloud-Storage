@@ -18,3 +18,7 @@ env/
 backend/tests/__pycache__/
 backend/tests/.pytest_cache
 venv/
+/backend/app/logs
+test.py
+tests/*.txt
+./*.py

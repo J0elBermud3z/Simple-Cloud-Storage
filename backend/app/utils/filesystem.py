@@ -1,18 +1,30 @@
 import os
+import re
+import urllib.parse
 
 import mimetypes
 
 
-def secure_path(base_dir:str, user_input:str) -> bool:
-
-    if user_input == '/':
+def secure_path(base_dir: str, user_input: str) -> bool:
+    
+    if user_input == '':
         return True
+
+    user_input = urllib.parse.unquote(user_input)
+
+    user_input = user_input.replace("\\", "/")
+
+
+    if re.search(r"\.{3,}", user_input):
+        return False  
     
-    user_path = os.path.normpath(os.path.join(base_dir, user_input))
-    if os.path.commonprefix([user_path, base_dir]) != base_dir:
-        return False
-    
-    return True
+    if re.search(r"[^a-zA-Z0-9_\-./]", user_input):
+        return False  
+
+    base_real = os.path.realpath(base_dir)
+    target_real = os.path.realpath(os.path.join(base_real, user_input))
+
+    return target_real.startswith(base_real + os.sep)
 
 def format_directory(directory:str) -> str:
     
