@@ -1,7 +1,11 @@
-# Simple Cloud Storage
+<div align="center">
+
+# Simple Cloud Storage  
 ![Status](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow) ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Flask](https://img.shields.io/badge/Flask-2.x-green) ![Docker](https://img.shields.io/badge/Docker-Enabled-blue)
 
-Una API de almacenamiento en la nube simple y REST construida con Flask. Gestiona archivos y directorios con facilidad.
+</div>
+
+Una API de almacenamiento diseñada para crear tu propia nube privada en entornos locales. Construida con Flask, permite gestionar archivos y directorios de forma ágil, segura y flexible.
 
 ## Características (v1.1)
 
