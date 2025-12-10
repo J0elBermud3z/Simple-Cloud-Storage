@@ -34,10 +34,8 @@ La API estará disponible en `http://localhost`.
 Proveemos un Dockerfile para ejecutar las pruebas de forma aislada:
 
 ```bash
-# Construir la imagen de pruebas
 docker build -f backend/Dockerfile.test -t simple_cloud_tests backend
 
-# Ejecutar tests
 docker run --rm simple_cloud_tests
 ```
 
