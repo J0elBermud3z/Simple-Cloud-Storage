@@ -11,7 +11,7 @@ Una API de almacenamiento diseñada para crear tu propia nube privada en entorno
 
 - **Gestión de Archivos**: Subir, descargar, renombrar y eliminar archivos.
 - **Gestión de Carpetas**: Crear, listar, renombrar y eliminar directorios.
-- **Diseño RESTful**: Métodos HTTP y códigos de estado estándar.
+- **Diseño REST**: Métodos HTTP y códigos de estado estándar.
 - **Dockerizado**: Fácil de desplegar y probar usando Docker.
 
 ## Comenzando
