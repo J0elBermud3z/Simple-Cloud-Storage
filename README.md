@@ -7,7 +7,7 @@
 
 Una API de almacenamiento diseñada para crear tu propia nube privada en entornos locales. Construida con Flask, permite gestionar archivos y directorios de forma ágil, segura y flexible.
 
-## Características (v1.1)
+## Características (v1.1.0)
 
 - **Gestión de Archivos**: Subir, descargar, renombrar y eliminar archivos.
 - **Gestión de Carpetas**: Crear, listar, renombrar y eliminar directorios.
