@@ -1,12 +1,17 @@
-# Simple Cloud Storage
+<div align="center">
 
-Una API de almacenamiento en la nube simple y REST construida con Flask. Gestiona archivos y directorios con facilidad.
+# Simple Cloud Storage  
+![Status](https://img.shields.io/badge/Estado-En%20Desarrollo-yellow) ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Flask](https://img.shields.io/badge/Flask-2.x-green) ![Docker](https://img.shields.io/badge/Docker-Enabled-blue)
+
+</div>
+
+Una API de almacenamiento diseñada para crear tu propia nube privada en entornos locales. Construida con Flask, permite gestionar archivos y directorios de forma ágil, segura y flexible.
 
 ## Características (v1.1)
 
 - **Gestión de Archivos**: Subir, descargar, renombrar y eliminar archivos.
 - **Gestión de Carpetas**: Crear, listar, renombrar y eliminar directorios.
-- **Diseño RESTful**: Métodos HTTP y códigos de estado estándar.
+- **Diseño REST**: Métodos HTTP y códigos de estado estándar.
 - **Dockerizado**: Fácil de desplegar y probar usando Docker.
 
 ## Comenzando
@@ -29,10 +34,8 @@ La API estará disponible en `http://localhost`.
 Proveemos un Dockerfile para ejecutar las pruebas de forma aislada:
 
 ```bash
-# Construir la imagen de pruebas
 docker build -f backend/Dockerfile.test -t simple_cloud_tests backend
 
-# Ejecutar tests
 docker run --rm simple_cloud_tests
 ```
 
