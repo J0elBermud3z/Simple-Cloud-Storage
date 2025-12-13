@@ -1,0 +1,211 @@
+{
+	"info": {
+  		"name": "Simple Cloud Storage API",
+  		"description": "Colección de Postman para la API Simple Cloud Storage.\n\nIncluye endpoints para la gestión de carpetas y archivos, como listado de contenido, creación, renombrado y eliminación de recursos.",
+  		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/folder",
+			"item": [
+				{
+					"name": "create_folder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:80/api/folder/folder_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"folder",
+								"folder_name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_folder",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:80/api/folder/folder_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"folder",
+								"folder_name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rename_folder",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"new_name\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:80/api/folder/folder_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"folder",
+								"folder_name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_folder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:80/api/folder/folder_name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"folder",
+								"folder_name"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/file",
+			"item": [
+				{
+					"name": "create_file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:80/api/file/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"file",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_file",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:80/api/file/file_name.txt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"file",
+								"file_name.txt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rename_file",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"new_name\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:80/api/file/file_name.txt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"file",
+								"file_name.txt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_file",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:80/api/file/file_name.txt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"file",
+								"file_name.txt"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
